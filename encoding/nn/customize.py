@@ -44,7 +44,7 @@ class SegmentationLosses(CrossEntropyLoss):
             pred1, pred2, target = tuple(inputs)
             valid = (target!=self.ignore_index).unsqueeze(1)
             n,c,h,w = pred1.size()
-            target = target.unsqueeze(1)
+            target = target.unsqueeze(1).float()
             loss1 = self.bce(pred1[valid.expand(n,c,h,w)], target[valid.expand(n,c,h,w)])
             loss2 = self.bce(pred2[valid.expand(n,c,h,w)], target[valid.expand(n,c,h,w)])
             return loss1 + self.aux_weight * loss2
