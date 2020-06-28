@@ -68,8 +68,8 @@ def batch_pix_accuracy(output, target):
         predict: input 4D tensor
         target: label 3D tensor
     """
-    _, predict = torch.max(output, 1)
-
+    # _, predict = torch.max(output, 1)
+    predict = (torch.sigmoid(output)>0.5).squeeze(1)
     predict = predict.cpu().numpy().astype('int64') + 1
     target = target.cpu().numpy().astype('int64') + 1
 
@@ -87,10 +87,11 @@ def batch_intersection_union(output, target, nclass):
         target: label 3D tensor
         nclass: number of categories (int)
     """
-    _, predict = torch.max(output, 1)
+    # _, predict = torch.max(output, 1)
+    predict = (torch.sigmoid(output)>0.5).squeeze(1)
     mini = 1
-    maxi = nclass
-    nbins = nclass
+    maxi = nclass+1
+    nbins = nclass+1
     predict = predict.cpu().numpy().astype('int64') + 1
     target = target.cpu().numpy().astype('int64') + 1
 
