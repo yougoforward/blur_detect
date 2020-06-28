@@ -84,7 +84,8 @@ def test(args):
             for predict, impath in zip(predicts, dst):
                 # mask = utils.get_mask_pallete(predict, args.dataset)
                 import numpy
-                mask = (predict[0,1,:,:]*255).astype(numpy.uint8)
+                from PIL import Image
+                mask = Image.fromarray((predict[0,1,:,:]*255).astype(numpy.uint8))
                 outname = os.path.splitext(impath)[0] + '.bmp'
                 mask.save(os.path.join(outdir, outname))
 
