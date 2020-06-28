@@ -78,14 +78,14 @@ def test(args):
         else:
             with torch.no_grad():
                 outputs = evaluator.parallel_forward(image)
-                # predicts = [testset.make_pred(torch.max(output, 1)[1].cpu().numpy())
+                # predicts = [testset.make_pred((torch.sigmoid(output)>0.5).cpu().numpy())
                 #             for output in outputs]
-                predicts = [torch.softmax(output,1).cpu().numpy() for output in outputs]
+                predicts = [torch.sigmoid(output).squeeze().cpu().numpy() for output in outputs]
             for predict, impath in zip(predicts, dst):
                 # mask = utils.get_mask_pallete(predict, args.dataset)
                 import numpy as np
                 from PIL import Image
-                mask = Image.fromarray((predict[0,1,:,:]*255).astype(np.uint8))
+                mask = Image.fromarray((predict*255).astype(np.uint8))
                 outname = os.path.splitext(impath)[0] + '.bmp'
                 mask.save(os.path.join(outdir, outname))
 

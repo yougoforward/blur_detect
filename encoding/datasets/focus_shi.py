@@ -14,9 +14,9 @@ from .base import BaseDataset
 
 class Blur2Segmentation(BaseDataset):
     CLASSES = [
-        'blur', 'clear'
+        'clear'
     ]
-    NUM_CLASS = 2
+    NUM_CLASS = 1
     BASE_DIR = 'focus_shi'
     def __init__(self, root=os.path.expanduser('./datasets'), split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):
