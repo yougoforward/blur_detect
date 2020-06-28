@@ -83,9 +83,9 @@ def test(args):
                 predicts = [torch.softmax(output,1).cpu().numpy() for output in outputs]
             for predict, impath in zip(predicts, dst):
                 # mask = utils.get_mask_pallete(predict, args.dataset)
-                import numpy
+                import numpy as np
                 from PIL import Image
-                mask = Image.fromarray((predict[0,1,:,:]*255).astype(numpy.uint8))
+                mask = Image.fromarray((predict[0,1,:,:]*255).astype(np.uint8))
                 outname = os.path.splitext(impath)[0] + '.bmp'
                 mask.save(os.path.join(outdir, outname))
 
